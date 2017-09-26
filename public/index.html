@@ -1,30 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>Cloud renderer</title>
+    <title>App Streaming P.O.C.</title>
   </head>
   <body>
-    <div id="main"></div>
-    <script src="/socket.io.js"></script>
-    <script src="/socket.io-stream.js"></script>
-    <script src="/broadway-decoder.js"></script>
-    <script src="/broadway-player.js"></script>
-    <script>
-      var socket = io.connect('http://localhost:3000');
-      var container = document.getElementById('main');
+    <script type="text/javascript" src="http-live-player.js">;</script>
+    <script type="text/javascript">
+      var canvas = document.createElement("canvas");
+      document.body.appendChild(canvas);
 
-      var p = new Player({
-      });
-
-      container.appendChild(p.canvas)
-
-      ss(socket).on('streamVideo', function (stream) {
-        stream.on('data', function(data) {
-          p.decode(data);
-        })
-        // socket.emit('executeCommand', { my: 'data' });
-      });
+      var uri = "ws://" + document.location.host;
+      var wsavc = new WSAvcPlayer(canvas, "webgl", 1, 35);
+      wsavc.connect(uri);
+      setTimeout(() => wsavc.playStream(), 100);
     </script>
   </body>
 </html>

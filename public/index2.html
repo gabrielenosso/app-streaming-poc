@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Cloud renderer</title>
+  </head>
+  <body>
+    <div id="main"></div>
+    <script src="/socket.io.js"></script>
+    <script src="/socket.io-stream.js"></script>
+    <script src="/broadway-decoder.js"></script>
+    <script src="/broadway-player.js"></script>
+    <script>
+      var socket = io.connect('http://localhost:3000');
+      var container = document.getElementById('main');
+
+      var p = new Player({
+      });
+
+      container.appendChild(p.canvas)
+
+      ss(socket).on('streamVideo', function (stream) {
+        stream.on('data', function(data) {
+          p.decode('ert');
+        })
+        // socket.emit('executeCommand', { my: 'data' });
+      });
+    </script>
+  </body>
+</html>
