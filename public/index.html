@@ -5,25 +5,23 @@
     <title>Cloud renderer</title>
   </head>
   <body>
-    <canvas id="canvas"></canvas>
+    <div id="main"></div>
     <script src="/socket.io.js"></script>
     <script src="/socket.io-stream.js"></script>
     <script src="/broadway-decoder.js"></script>
     <script src="/broadway-player.js"></script>
     <script>
       var socket = io.connect('http://localhost:3000');
-      var canvas = document.getElementById('canvas');
-      var ctx = canvas.getContext('2d');
+      var container = document.getElementById('main');
+
+      var p = new Player({
+      });
+
+      container.appendChild(p.canvas)
 
       ss(socket).on('streamVideo', function (stream) {
-        // var img = new Image;
-        // img.onload = function(){
-        //   ctx.drawImage(img,0,0); // Or at whatever offset you like
-        // };
-        // img.src = data;
-        console.log(stream);
         stream.on('data', function(data) {
-          console.log(data);
+          p.decode(data);
         })
         // socket.emit('executeCommand', { my: 'data' });
       });

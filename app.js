@@ -46,7 +46,15 @@ io.on('connection', function (socket) {
   ffmpeg
   .input('video=screen-capture-recorder')
   .inputOptions([
-    '-f dshow'
+    '-f dshow',
+    '-framerate 20',
+    // '-video_size 600x400',
+    '-pix_fmt yuv420p',
+    // '-c:v libx264',
+    // '-b:v 600k',
+    // '-bufsize 600k',
+    // '-tune zerolatency',
+    '-vprofile baseline'
   ])
   .on('error', function(err) {
     console.log('An error occurred: ' + err.message);
@@ -54,10 +62,11 @@ io.on('connection', function (socket) {
   .on('end', function() {
     console.log('Streaming finished');
   })
-  .format('flv')
+  .format('rawvideo')
   .videoCodec('libx264')
-  .pipe(stream)
-  // .pipe(base64.encode()).pipe(stream);
+  .pipe(stream);
+  // .output('video.avi')
+  // .run();
 });
 
 console.log(`SERVER LISTENTING ON PORT: ${port}`)
