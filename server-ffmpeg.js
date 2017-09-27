@@ -12,8 +12,8 @@ app.use(express.static(__dirname + '/vendor'));
 
 const server = http.Server(app);
 const streamServer = new Server(server, {
-  width: 640,
-  height: 480
+  width: 1920,
+  height: 1080
 });
 
 server.listen(port);
