@@ -12,3 +12,7 @@ ffmpeg -f dshow -i video="screen-capture-recorder" output.flv
 Share single process
 ffmpeg -f gdigrab -framerate 30 -i title="german.avi - VLC media player" -b:v 3M  germ.flv
 where "title" means actual title of a target window.
+
+
+If it says that can't find CL.exe:
+`npm config set msvs_version 2013 --global`

@@ -2,16 +2,30 @@
 <html>
   <head>
     <title>App Streaming P.O.C.</title>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+      }
+    </style>
   </head>
   <body>
+
     <script type="text/javascript" src="http-live-player.js">;</script>
     <script type="text/javascript">
-      var canvas = document.createElement("canvas");
+      var canvas = document.createElement('canvas');
       document.body.appendChild(canvas);
 
       var uri = "ws://" + document.location.host;
-      var wsavc = new WSAvcPlayer(canvas, "webgl", 1, 35);
+      var wsavc = new WSAvcPlayer(canvas, 'webgl', 1, 35);
       wsavc.connect(uri);
+
+      canvas.addEventListener('click', event => {
+        console.log('click', event.pageX, event.pageY)
+        wsavc.ws.send(`INPUT click ${event.pageX} ${event.pageY}`);
+      });
+
       setTimeout(() => wsavc.playStream(), 100);
     </script>
   </body>
